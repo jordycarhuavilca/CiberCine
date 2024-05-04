@@ -19,16 +19,15 @@ public class Usuarios {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idUsuario;
-    @OneToOne
-    @JoinColumn(name = "id_empleado", unique = true)
+    @ManyToOne
+    @JoinColumn(name = "id_empleado")
     private Empleados idEmpleado;
-    @Column(unique = true)
     private String usuario;
     private String contrasenia;
     @Temporal(TemporalType.DATE)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "UTC")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "America/Lima")
     private Date createdAt;
-    @OneToMany(mappedBy = "idUsuario", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToMany(mappedBy = "idUsuario")
     @JsonIgnore
     private List<ComprobantePago> comprobantePagos;
 }

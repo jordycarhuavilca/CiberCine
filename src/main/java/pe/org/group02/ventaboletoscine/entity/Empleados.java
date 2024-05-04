@@ -20,14 +20,15 @@ public class Empleados {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idEmpleado;
     private String nombreEmpleado;
-    @Column(unique = true)
     private String correoEmpleado;
     private String telefonoEmpleado;
-    @ManyToOne()
+    @ManyToOne
     @JoinColumn(name = "id_rol")
     private Roles idRol;
     @ManyToOne
     @JoinColumn(name = "id_cine")
     private Cine idCine;
-
+    @OneToMany(mappedBy = "idEmpleado", cascade = CascadeType.REMOVE)
+    @JsonIgnore
+    private List<Usuarios> usuarios;
 }

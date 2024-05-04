@@ -1,5 +1,6 @@
 package pe.org.group02.ventaboletoscine.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
@@ -18,6 +19,8 @@ public class Funciones {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idFuncion;
+    @Temporal(TemporalType.TIMESTAMP)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm", timezone = "America/Lima")
     private Date fecha;
     @ManyToOne
     @JoinColumn(name = "id_peligen")
