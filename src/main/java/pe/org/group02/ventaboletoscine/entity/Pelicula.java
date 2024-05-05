@@ -21,7 +21,7 @@ public class Pelicula {
     private String directorPelicula;
     private String duracionPelicula;
     private String idiomaPelicula;
-    @OneToMany(mappedBy = "idPelicula")
+    @OneToMany(mappedBy = "pelicula")
     @JsonIgnore
     private List<PeliculasGenero> peliculasGeneros;
 }
