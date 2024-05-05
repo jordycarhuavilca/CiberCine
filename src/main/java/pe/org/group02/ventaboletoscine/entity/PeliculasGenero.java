@@ -17,12 +17,12 @@ public class PeliculasGenero {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idPeligen;
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.DETACH,CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "id_pelicula")
-    private Pelicula idPelicula;
-    @ManyToOne
+    private Pelicula pelicula;
+    @ManyToOne(cascade = {CascadeType.DETACH })
     @JoinColumn(name = "id_genero")
-    private Genero idGenero;
+    private Genero genero;
     @OneToMany(mappedBy = "idPeligen")
     @JsonIgnore
     private List<Funciones> funciones;
