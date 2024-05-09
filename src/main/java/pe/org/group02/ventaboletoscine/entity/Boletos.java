@@ -1,5 +1,7 @@
 package pe.org.group02.ventaboletoscine.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -22,5 +24,6 @@ public class Boletos {
     private Double precio;
     private Integer cantidad;
     @OneToMany(mappedBy = "idBoleto")
+    @JsonIgnore
     private List<ComprobantePago> comprobantePagos;
 }
