@@ -9,6 +9,7 @@ import pe.org.group02.ventaboletoscine.response.ResponseConsultas;
 
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequestMapping("function")
 public class FuncionesService {
@@ -38,7 +39,6 @@ public class FuncionesService {
 
         return new ResponseConsultas<Funciones>( 200 , null, funciones);
     }
-
     @PostMapping("/update")
     public Response updateFuncion(@RequestBody Funciones funciones){
         if(!funcionesRepository.findById(funciones.getIdFuncion()).isPresent()){
