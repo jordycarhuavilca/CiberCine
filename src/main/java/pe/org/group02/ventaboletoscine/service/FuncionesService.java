@@ -11,7 +11,7 @@ import java.util.List;
 
 @CrossOrigin
 @RestController
-@RequestMapping("function")
+@RequestMapping("/function")
 public class FuncionesService {
 
     @Autowired
@@ -39,7 +39,7 @@ public class FuncionesService {
 
         return new ResponseConsultas<Funciones>( 200 , null, funciones);
     }
-    @PostMapping("/update")
+    @PatchMapping("/update")
     public Response updateFuncion(@RequestBody Funciones funciones){
         if(!funcionesRepository.findById(funciones.getIdFuncion()).isPresent()){
             return new Response(404, "Not Found");
@@ -49,7 +49,7 @@ public class FuncionesService {
         return new Response(200, null);
     }
 
-    @PostMapping("/delete")
+    @DeleteMapping("/delete")
     public Response deleteFuncion(@RequestBody Funciones funciones) {
         if (!funcionesRepository.findById(funciones.getIdFuncion()).isPresent()) {
             return new Response(404, "Not Found");

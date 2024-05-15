@@ -14,6 +14,7 @@ import pe.org.group02.ventaboletoscine.security.JWTAuthenticationConfig;
 import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/user")
 public class UsuariosService {
@@ -65,7 +66,7 @@ public class UsuariosService {
         return new ResponseConsultas<Usuarios>( 200 , null, usuarios);
     }
 
-    @PostMapping("/update")
+    @PatchMapping("/update")
     public Response updateUsuario(@RequestBody Usuarios usuarios){
         if(!usuariosRepository.findById(usuarios.getIdUsuario()).isPresent()){
             return new Response(404, "Not Found");
@@ -77,7 +78,7 @@ public class UsuariosService {
         return new Response(200, null);
     }
 
-    @PostMapping("/delete")
+    @DeleteMapping("/delete")
     public Response deleteUsuario(@RequestBody Usuarios usuarios) {
         if (!usuariosRepository.findById(usuarios.getIdUsuario()).isPresent()) {
             return new Response(404, "Not Found");

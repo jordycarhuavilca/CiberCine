@@ -8,6 +8,7 @@ import pe.org.group02.ventaboletoscine.response.ResponseConsultas;
 import java.util.ArrayList;
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/movies")
 public class PeliculasGeneroService {
@@ -30,12 +31,17 @@ public class PeliculasGeneroService {
             moviesGenders = peliculasGeneroRepository.getMovie(idMovie);
             if(moviesGenders == null) return new ResponseConsultas(404, "Not Found" , null);
             peliculasGeneros.add(moviesGenders);
-
         }
         if (idGender != null){
             peliculasGeneros =(List<PeliculasGenero>)peliculasGeneroRepository.getGender(idGender);
             if(peliculasGeneros.size() == 0 ) return new ResponseConsultas(404, "Not Found" , null);
         }
+        if (idMovie == null && idGender == null) {
+            Iterable<PeliculasGenero> peligen = null;
+            peligen = peliculasGeneroRepository.findAll();
+            return new ResponseConsultas<PeliculasGenero>( 200 , null, peligen);
+        }
+
         return new ResponseConsultas<PeliculasGenero>( 200 , null, peliculasGeneros);
     }
 
@@ -54,11 +60,10 @@ public class PeliculasGeneroService {
             if(moviesGenders == null) return new Response(404, "Not Found 2 " );
             peliculasGeneroRepository.save(peliculasGenero);
         }
-
         return new Response(200, null);
     }
 
-    @PostMapping("/delete")
+    @DeleteMapping("/delete")
     public Response delete(@RequestParam  Integer idMovie,@RequestParam  Integer idGender) {
         PeliculasGenero moviesGenders= null;
         List<PeliculasGenero> peliculasGeneros = new ArrayList<PeliculasGenero>();
@@ -67,7 +72,6 @@ public class PeliculasGeneroService {
             moviesGenders = peliculasGeneroRepository.getMovie(idMovie);
             if(moviesGenders == null)
                 return new Response(404, "Not Found" );
-
         }
         if (idGender != null){
             peliculasGeneros = (List<PeliculasGenero>) peliculasGeneroRepository.getGender(idGender);

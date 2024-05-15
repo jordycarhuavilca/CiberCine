@@ -9,6 +9,4 @@ public class VentaBoletosCineApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(VentaBoletosCineApplication.class, args);
 	}
-
 }
-	

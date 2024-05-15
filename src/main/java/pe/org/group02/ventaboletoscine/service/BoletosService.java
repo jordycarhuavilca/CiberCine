@@ -10,6 +10,7 @@ import pe.org.group02.ventaboletoscine.response.ResponseConsultas;
 
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/ticket")
 public class BoletosService {
@@ -39,7 +40,7 @@ public class BoletosService {
         return new ResponseConsultas<Boletos>( 200 , null, boletos);
     }
 
-    @PostMapping("/update")
+    @PatchMapping("/update")
     public Response updateBoleto(@RequestBody Boletos boletos){
         if(!boletosRepository.findById(boletos.getIdBoleto()).isPresent()){
             return new Response(404, "Not Found");
@@ -49,7 +50,7 @@ public class BoletosService {
         return new Response(200, null);
     }
 
-    @PostMapping("/delete")
+    @DeleteMapping("/delete")
     public Response deleteBoleto(@RequestBody Boletos boletos) {
         if (!boletosRepository.findById(boletos.getIdBoleto()).isPresent()) {
             return new Response(404, "Not Found");

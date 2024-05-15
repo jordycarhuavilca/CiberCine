@@ -25,28 +25,34 @@ public class WebSecurityConfig {
                         //Usuarios
                         .requestMatchers(HttpMethod.POST, "/user/add").hasAnyRole("Operador", "Administrador")
                         .requestMatchers(HttpMethod.GET, "/user/find").hasAnyRole("Operador", "Administrador")
-                        .requestMatchers(HttpMethod.POST, "/user/update").hasRole("Administrador")
-                        .requestMatchers(HttpMethod.POST, "/user/delete").hasRole("Administrador")
+                        .requestMatchers(HttpMethod.PATCH, "/user/update").hasRole("Administrador")
+                        .requestMatchers(HttpMethod.DELETE, "/user/delete").hasRole("Administrador")
                         //PeliculasGenero
                         .requestMatchers(HttpMethod.POST, "/movies/add").hasAnyRole("Operador", "Administrador")
                         .requestMatchers(HttpMethod.GET, "/movies/find").hasAnyRole("Operador", "Administrador")
-                        .requestMatchers(HttpMethod.POST, "/movies/update").hasRole("Administrador")
-                        .requestMatchers(HttpMethod.POST, "/movies/delete").hasRole("Administrador")
+                        .requestMatchers(HttpMethod.PATCH, "/movies/update").hasAnyRole("Administrador")
+                        .requestMatchers(HttpMethod.DELETE, "/movies/delete").hasRole("Administrador")
                         //Funciones
                         .requestMatchers(HttpMethod.POST, "/function/add").hasAnyRole("Operador", "Administrador")
                         .requestMatchers(HttpMethod.GET, "/function/find").hasAnyRole("Operador", "Administrador")
-                        .requestMatchers(HttpMethod.POST, "/function/update").hasRole("Administrador")
-                        .requestMatchers(HttpMethod.POST, "/function/delete").hasRole("Administrador")
+                        .requestMatchers(HttpMethod.PATCH, "/function/update").hasRole("Administrador")
+                        .requestMatchers(HttpMethod.DELETE, "/function/delete").hasRole("Administrador")
                         //Empleados
                         .requestMatchers(HttpMethod.POST, "/employee/add").hasAnyRole("Operador", "Administrador")
                         .requestMatchers(HttpMethod.GET, "/employee/find").hasAnyRole("Operador", "Administrador")
-                        .requestMatchers(HttpMethod.POST, "/employee/update").hasRole("Administrador")
-                        .requestMatchers(HttpMethod.POST, "/employee/delete").hasRole("Administrador")
+                        .requestMatchers(HttpMethod.PATCH, "/employee/update").hasRole("Administrador")
+                        .requestMatchers(HttpMethod.DELETE, "/employee/delete").hasRole("Administrador")
                         //Boletos
                         .requestMatchers(HttpMethod.POST, "/ticket/add").hasAnyRole("Operador", "Administrador")
                         .requestMatchers(HttpMethod.GET, "/ticket/find").hasAnyRole("Operador", "Administrador")
-                        .requestMatchers(HttpMethod.POST, "/ticket/update").hasRole("Administrador")
-                        .requestMatchers(HttpMethod.POST, "/ticket/delete").hasRole("Administrador")
+                        .requestMatchers(HttpMethod.PATCH, "/ticket/update").hasRole("Administrador")
+                        .requestMatchers(HttpMethod.DELETE, "/ticket/delete").hasRole("Administrador")
+
+                        //PeliculasGeneroService
+                        .requestMatchers(HttpMethod.POST, "/movies/add").hasAnyRole("Operador", "Administrador")
+                        .requestMatchers(HttpMethod.GET, "/movies/find").hasAnyRole("Operador", "Administrador")
+                        .requestMatchers(HttpMethod.PATCH, "/movies/update").hasRole("Administrador")
+                        .requestMatchers(HttpMethod.DELETE, "/movies/delete").hasRole("Administrador")
 
                         .anyRequest().authenticated()
                 )

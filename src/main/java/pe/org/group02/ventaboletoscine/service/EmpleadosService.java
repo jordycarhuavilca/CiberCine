@@ -9,6 +9,7 @@ import pe.org.group02.ventaboletoscine.response.ResponseConsultas;
 
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/employee")
 public class EmpleadosService {
@@ -40,7 +41,7 @@ public class EmpleadosService {
         return new ResponseConsultas<Empleados>(200, null, empleados);
     }
 
-    @PostMapping("/update")
+    @PatchMapping("/update")
     public Response updateEmpleados(@RequestBody Empleados empleados) {
         if (!empleadosRepository.findById(empleados.getIdEmpleado()).isPresent()) {
             return new Response(404, "Not Found");
@@ -49,7 +50,7 @@ public class EmpleadosService {
         return new Response(200, null);
     }
 
-    @PostMapping("/delete")
+    @DeleteMapping("/delete")
     public Response deleteEmpleados(@RequestBody Empleados empleados) {
         if (!empleadosRepository.findById(empleados.getIdEmpleado()).isPresent()) {
             return new Response(404, "Not Found");
