@@ -19,7 +19,7 @@ public class FuncionesService {
 
     @PostMapping("/add")
     public Response addFuncione(@RequestBody Funciones funciones){
-        if(funciones.getIdFuncion() != null){
+        if(funciones.getIdfuncion() != null){
             return new Response(401, "Id no permitido");
         }
         funcionesRepository.save(funciones);
@@ -39,9 +39,10 @@ public class FuncionesService {
 
         return new ResponseConsultas<Funciones>( 200 , null, funciones);
     }
+
     @PatchMapping("/update")
     public Response updateFuncion(@RequestBody Funciones funciones){
-        if(!funcionesRepository.findById(funciones.getIdFuncion()).isPresent()){
+        if(!funcionesRepository.findById(funciones.getIdfuncion()).isPresent()){
             return new Response(404, "Not Found");
         }
 
@@ -51,7 +52,7 @@ public class FuncionesService {
 
     @DeleteMapping("/delete")
     public Response deleteFuncion(@RequestBody Funciones funciones) {
-        if (!funcionesRepository.findById(funciones.getIdFuncion()).isPresent()) {
+        if (!funcionesRepository.findById(funciones.getIdfuncion()).isPresent()) {
             return new Response(404, "Not Found");
         }
         funcionesRepository.delete(funciones);

@@ -16,14 +16,11 @@ import java.util.List;
 public class Cine {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idCine;
+    private Integer idcine;
     private String nombre;
     private String direccion;
     private String ciudad;
-    @OneToMany(mappedBy = "idCine")
+    @OneToMany(mappedBy = "idcine")
     @JsonIgnore
     private List<Salas> salas;
-    @OneToMany(mappedBy = "idCine")
-    @JsonIgnore
-    private List<Empleados> empleados;
 }

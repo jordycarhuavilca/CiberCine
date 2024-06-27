@@ -16,14 +16,20 @@ import java.util.List;
 public class Salas {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idSala;
-    private String numeroSala;
-    private Boolean disponibilidadSala;
-    private Integer numeroButacas;
+    private Integer idsala;
+    private String numero;
+    private Boolean saladisponibilidad;
+    private Integer nrobutacas;
     @ManyToOne
-    @JoinColumn(name = "id_cine")
-    private Cine idCine;
-    @OneToMany(mappedBy = "idSala")
+    @JoinColumn(name = "idcine")
+    private Cine idcine;
+    @OneToMany(mappedBy = "idsala")
     @JsonIgnore
     private List<Funciones> funciones;
+    @OneToMany(mappedBy = "idsala")
+    @JsonIgnore
+    private List<Confiteria> confiterias;
+    @OneToMany(mappedBy = "idsala")
+    @JsonIgnore
+    private List<Butacas> butacas;
 }

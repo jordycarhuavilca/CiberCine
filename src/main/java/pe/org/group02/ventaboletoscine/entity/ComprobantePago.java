@@ -9,17 +9,12 @@ import lombok.*;
 @Setter
 @ToString
 @Entity
-@Table(name = "comprobante_pago")
+@Table(name = "comprobantepago")
 public class ComprobantePago {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idComprobante;
+    private Integer idcomprobante;
     @ManyToOne
-    @JoinColumn(name = "id_boleto")
-    private Boletos idBoleto;
-    @ManyToOne
-    @JoinColumn(name = "id_usuario")
-    private Usuarios idUsuario;
-    private Double montoTotal;
-    private String metodoPago;
+    @JoinColumn(name = "idcompra")
+    private Compra idcompra;
 }

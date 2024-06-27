@@ -3,7 +3,6 @@ package pe.org.group02.ventaboletoscine.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-import pe.org.group02.ventaboletoscine.entity.Empleados;
 import pe.org.group02.ventaboletoscine.entity.Usuarios;
 import pe.org.group02.ventaboletoscine.repository.UsuariosRepository;
 import pe.org.group02.ventaboletoscine.response.Response;
@@ -12,7 +11,6 @@ import pe.org.group02.ventaboletoscine.response.ResponseLogin;
 import pe.org.group02.ventaboletoscine.security.JWTAuthenticationConfig;
 
 import java.util.List;
-import java.util.Optional;
 
 @CrossOrigin
 @RestController
@@ -27,28 +25,28 @@ public class UsuariosService {
 
     @PostMapping("/login")
     public ResponseLogin loginUsuario(@RequestBody Usuarios usu){
-        Usuarios usuResult = usuariosRepository.findByUsuario(usu.getUsuario());
+        Usuarios usuResult = usuariosRepository.findByEmail(usu.getEmail());
         if(usuResult == null){
             return new ResponseLogin(404, "user not found", null);
         }
-        if(!new BCryptPasswordEncoder().matches(usu.getContrasenia(), usuResult.getContrasenia())){
+        if(!new BCryptPasswordEncoder().matches(usu.getPassword(), usuResult.getPassword())){
             return new ResponseLogin(99, "wrong password", null);
         }
 
-        String token = jwtAuthenticationConfig.getJWTToken(usuResult);
+        String token = jwtAuthenticationConfig.getJWTToken(usu.getEmail());
         return new ResponseLogin(01, null, token);
     }
 
     @PostMapping("/add")
-    public Response addUsuario(@RequestBody Usuarios usuarios) {
+    public Response addUsuario(@RequestBody Usuarios usu) {
 
-        if (usuarios.getIdUsuario() != null) {
+        if (usu.getIdusuario() != null) {
             return new Response(401, "Id no permitido");
         }
 
-        String encodedPassword = new BCryptPasswordEncoder().encode(usuarios.getContrasenia());
-        usuarios.setContrasenia(encodedPassword);
-        usuariosRepository.save(usuarios);
+        String encodedPassword = new BCryptPasswordEncoder().encode(usu.getPassword());
+        usu.setPassword(encodedPassword);
+        usuariosRepository.save(usu);
         return new Response(200, null);
     }
 
@@ -67,23 +65,23 @@ public class UsuariosService {
     }
 
     @PatchMapping("/update")
-    public Response updateUsuario(@RequestBody Usuarios usuarios){
-        if(!usuariosRepository.findById(usuarios.getIdUsuario()).isPresent()){
+    public Response updateUsuario(@RequestBody Usuarios usu){
+        if(!usuariosRepository.findById(usu.getIdusuario()).isPresent()){
             return new Response(404, "Not Found");
         }
 
-        String encodedPassword = new BCryptPasswordEncoder().encode(usuarios.getContrasenia());
-        usuarios.setContrasenia(encodedPassword);
-        usuariosRepository.save(usuarios);
+        String encodedPassword = new BCryptPasswordEncoder().encode(usu.getPassword());
+        usu.setPassword(encodedPassword);
+        usuariosRepository.save(usu);
         return new Response(200, null);
     }
 
     @DeleteMapping("/delete")
-    public Response deleteUsuario(@RequestBody Usuarios usuarios) {
-        if (!usuariosRepository.findById(usuarios.getIdUsuario()).isPresent()) {
+    public Response deleteUsuario(@RequestBody Usuarios usu) {
+        if (!usuariosRepository.findById(usu.getIdusuario()).isPresent()) {
             return new Response(404, "Not Found");
         }
-        usuariosRepository.delete(usuarios);
+        usuariosRepository.delete(usu);
         return new Response(200, null);
     }
 
