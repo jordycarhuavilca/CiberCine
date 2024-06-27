@@ -18,17 +18,20 @@ import java.util.List;
 public class Funciones {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idFuncion;
+    private Integer idfuncion;
     @Temporal(TemporalType.TIMESTAMP)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm", timezone = "America/Lima")
-    private Date fecha;
+    private Date fechahora;
     @ManyToOne
-    @JoinColumn(name = "id_peligen")
-    private PeliculasGenero idPeligen;
+    @JoinColumn(name = "idprecio")
+    private Precios idprecio;
     @ManyToOne
-    @JoinColumn(name = "id_sala")
-    private Salas idSala;
-    @OneToMany(mappedBy = "idFuncion")
+    @JoinColumn(name = "idsala")
+    private Salas idsala;
+    @ManyToOne
+    @JoinColumn(name = "idpelicula")
+    private Pelicula idpelicula;
+    @OneToMany(mappedBy = "idfuncion")
     @JsonIgnore
-    private List<Boletos> boletos;
+    private List<DetalleCompra> detalleCompras;
 }

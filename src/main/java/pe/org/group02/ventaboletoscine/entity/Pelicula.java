@@ -16,12 +16,18 @@ import java.util.List;
 public class Pelicula {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idPelicula;
-    private String nombrePelicula;
-    private String directorPelicula;
-    private String duracionPelicula;
-    private String idiomaPelicula;
-    @OneToMany(mappedBy = "pelicula")
+    private Integer idpelicula;
+    private String nombrepelicula;
+    private String descripcion;
+    private String genero;
+    private String trailerurl;
+    private String imgurl;
+    private String directorpelicula;
+    private String duracionpelicula;
+    @OneToMany(mappedBy = "idpelicula")
     @JsonIgnore
-    private List<PeliculasGenero> peliculasGeneros;
+    private List<Precios> precios;
+    @OneToMany(mappedBy = "idpelicula")
+    @JsonIgnore
+    private List<Funciones> funciones;
 }

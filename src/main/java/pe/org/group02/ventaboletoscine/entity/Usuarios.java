@@ -14,20 +14,22 @@ import java.util.List;
 @Setter
 @ToString
 @Entity
-@Table(name = "usuarios")
+@Table(name = "usuario")
 public class Usuarios {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idUsuario;
-    @ManyToOne
-    @JoinColumn(name = "id_empleado")
-    private Empleados idEmpleado;
-    private String usuario;
-    private String contrasenia;
+    private Integer idusuario;
+    private String email;
+    private String password;
+    private String nombre;
+    private String apellido;
     @Temporal(TemporalType.DATE)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "America/Lima")
-    private Date createdAt;
-    @OneToMany(mappedBy = "idUsuario")
+    private Date createdat;
+    @Temporal(TemporalType.DATE)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "America/Lima")
+    private Date updatedat;
+    @OneToMany(mappedBy = "idusuario")
     @JsonIgnore
-    private List<ComprobantePago> comprobantePagos;
+    private List<Compra> compras;
 }
