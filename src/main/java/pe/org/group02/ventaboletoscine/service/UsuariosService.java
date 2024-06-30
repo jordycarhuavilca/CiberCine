@@ -89,7 +89,7 @@ public class UsuariosService {
         Email email = userUtils.setUpEmail(emailConstans.ASUNTO[0],userUtils.generateNumericId(),usuario);
         log.info("registrate.email " + email.toString());
         temporalRegistrationService.save(email);
-        //emailHelper.sendEmail(email);
+        emailHelper.sendEmail(email);
         return new Response(200, null);
     }
 
