@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pe.org.group02.ventaboletoscine.DTO.usuario.VerifyRegistrationDto;
 import pe.org.group02.ventaboletoscine.entity.Usuarios;
+import pe.org.group02.ventaboletoscine.response.Response;
 import pe.org.group02.ventaboletoscine.response.ResponseTemp;
 import pe.org.group02.ventaboletoscine.response.ResponseConsultas;
 import pe.org.group02.ventaboletoscine.response.ResponseLogin;
@@ -23,12 +24,12 @@ public class UsuarioController {
     }
 
     @PostMapping("/registrate")
-    public ResponseTemp registrate(@RequestBody Usuarios usu) {
+    public Response registrate(@RequestBody Usuarios usu) {
         return this.usuariosService.registrate(usu);
     }
 
     @PostMapping("/verifyRegistration")
-    public ResponseEntity<String> verifyRegistration(@RequestBody VerifyRegistrationDto verifyRegistrationDto) {
+    public Response<String> verifyRegistration(@RequestBody VerifyRegistrationDto verifyRegistrationDto) {
         return this.usuariosService.verifyRegistration(verifyRegistrationDto);
     }
 
