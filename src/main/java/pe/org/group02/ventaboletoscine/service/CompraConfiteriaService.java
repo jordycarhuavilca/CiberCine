@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import pe.org.group02.ventaboletoscine.entity.CompraConfiteria;
 import pe.org.group02.ventaboletoscine.repository.CompraConfiteriaRepository;
-import pe.org.group02.ventaboletoscine.response.Response;
+import pe.org.group02.ventaboletoscine.response.ResponseTemp;
 import pe.org.group02.ventaboletoscine.response.ResponseConsultas;
 
 import java.util.List;
@@ -18,12 +18,12 @@ public class CompraConfiteriaService {
     private CompraConfiteriaRepository compraConfiteriaRepository;
 
     @PostMapping("/add")
-    public Response addCompraConfiteria(@RequestBody CompraConfiteria compraConfiteria){
+    public ResponseTemp addCompraConfiteria(@RequestBody CompraConfiteria compraConfiteria){
         if(compraConfiteria.getIdcompraconfiteria() != null){
-            return new Response(401, "Id no permitido");
+            return new ResponseTemp(401, "Id no permitido");
         }
         compraConfiteriaRepository.save(compraConfiteria);
-        return new Response(200, null);
+        return new ResponseTemp(200, null);
     }
 
     @GetMapping("/find")
@@ -41,21 +41,21 @@ public class CompraConfiteriaService {
     }
 
     @PatchMapping("/update")
-    public Response updateCompraConfiteria(@RequestBody CompraConfiteria compraConfiteria){
+    public ResponseTemp updateCompraConfiteria(@RequestBody CompraConfiteria compraConfiteria){
         if(!compraConfiteriaRepository.findById(compraConfiteria.getIdcompraconfiteria()).isPresent()){
-            return new Response(404, "Not Found");
+            return new ResponseTemp(404, "Not Found");
         }
 
         compraConfiteriaRepository.save(compraConfiteria);
-        return new Response(200, null);
+        return new ResponseTemp(200, null);
     }
 
     @DeleteMapping("/delete")
-    public Response deleteCompraConfiteria(@RequestBody CompraConfiteria compraConfiteria) {
+    public ResponseTemp deleteCompraConfiteria(@RequestBody CompraConfiteria compraConfiteria) {
         if (!compraConfiteriaRepository.findById(compraConfiteria.getIdcompraconfiteria()).isPresent()) {
-            return new Response(404, "Not Found");
+            return new ResponseTemp(404, "Not Found");
         }
         compraConfiteriaRepository.delete(compraConfiteria);
-        return new Response(200, null);
+        return new ResponseTemp(200, null);
     }
 }

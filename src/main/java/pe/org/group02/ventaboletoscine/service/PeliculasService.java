@@ -1,61 +1,42 @@
 package pe.org.group02.ventaboletoscine.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
 import pe.org.group02.ventaboletoscine.entity.Pelicula;
 import pe.org.group02.ventaboletoscine.repository.PeliculasRepository;
 import pe.org.group02.ventaboletoscine.response.Response;
-import pe.org.group02.ventaboletoscine.response.ResponseConsultas;
 
-import java.util.List;
-
-@CrossOrigin
-@RestController
-@RequestMapping("/movie")
+@Service
 public class PeliculasService {
 
     @Autowired
     private PeliculasRepository peliculasRepository;
 
-    @PostMapping("/add")
-    public Response addMovie(@RequestBody Pelicula movie){
-        if(movie.getIdpelicula() != null){
-            return new Response(401, "Id no permitido");
-        }
-        peliculasRepository.save(movie);
-        return new Response(200, null);
-    }
+    public Response<Pelicula> findById( Integer id) {
+        try{
+            if (id == null) {
+                return new Response<Pelicula>(HttpStatus.BAD_REQUEST, null, "ID cannot be null");
+            }
 
-    @GetMapping("/find")
-    public ResponseConsultas<Pelicula> findById(@RequestParam(value = "id", defaultValue = "0") Integer id) {
-        Iterable<Pelicula> peliculas = null;
-        if (id > 0) {
-            peliculas = peliculasRepository.findAllById(List.of(id));
-        } else if (id == 0) {
-            peliculas = peliculasRepository.findAll();
-        } else {
-            return new ResponseConsultas<Pelicula>(404, "not found id", null);
-        }
+            Pelicula pelicula = peliculasRepository.findById(id).orElse(null);
 
-        return new ResponseConsultas<Pelicula>( 200 , null, peliculas);
-    }
+           if (pelicula == null) {
+                return new Response<Pelicula>(HttpStatus.NOT_FOUND,null, "Not Found");
+            }
 
-    @PatchMapping("/update")
-    public Response updateMovie(@RequestBody Pelicula movie){
-        if(!peliculasRepository.findById(movie.getIdpelicula()).isPresent()){
-            return new Response(404, "Not Found");
+            return new Response<Pelicula>( HttpStatus.OK , pelicula, null);
+        }catch (Exception e){
+            System.out.println("Exception "+ e);
+            return new Response<Pelicula>( HttpStatus.UNPROCESSABLE_ENTITY , null, "occured an error");
+
         }
 
-        peliculasRepository.save(movie);
-        return new Response(200, null);
     }
 
-    @DeleteMapping("/delete")
-    public Response deleteMovie(@RequestBody Pelicula movie) {
-        if (!peliculasRepository.findById(movie.getIdpelicula()).isPresent()) {
-            return new Response(404, "Not Found");
-        }
-        peliculasRepository.delete(movie);
-        return new Response(200, null);
+    public Response<Iterable<Pelicula>> list() {
+        return new Response<Iterable<Pelicula>>(HttpStatus.OK , peliculasRepository.findAll(),null);
     }
+
+
 }

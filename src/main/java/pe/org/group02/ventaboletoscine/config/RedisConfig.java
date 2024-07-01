@@ -38,7 +38,7 @@ public class RedisConfig {
         return (builder) -> builder
                 .withCacheConfiguration("itemCache",
                         RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofMinutes(10)))
-                .withCacheConfiguration("EmailCache",
-                        RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofSeconds(25)));
+                .withCacheConfiguration("movieCache",
+                        RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofSeconds(60*30)));
     }
 }

@@ -5,12 +5,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pe.org.group02.ventaboletoscine.DTO.usuario.VerifyRegistrationDto;
 import pe.org.group02.ventaboletoscine.entity.Usuarios;
-import pe.org.group02.ventaboletoscine.response.Response;
+import pe.org.group02.ventaboletoscine.response.ResponseTemp;
 import pe.org.group02.ventaboletoscine.response.ResponseConsultas;
 import pe.org.group02.ventaboletoscine.response.ResponseLogin;
 import pe.org.group02.ventaboletoscine.service.UsuariosService;
-
-import java.util.List;
 
 @CrossOrigin
 @RestController
@@ -25,7 +23,7 @@ public class UsuarioController {
     }
 
     @PostMapping("/registrate")
-    public Response registrate(@RequestBody Usuarios usu) {
+    public ResponseTemp registrate(@RequestBody Usuarios usu) {
         return this.usuariosService.registrate(usu);
     }
 

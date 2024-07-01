@@ -12,7 +12,7 @@ import pe.org.group02.ventaboletoscine.entity.Email;
 import pe.org.group02.ventaboletoscine.entity.Usuarios;
 import pe.org.group02.ventaboletoscine.helper.emailHelper;
 import pe.org.group02.ventaboletoscine.repository.UsuariosRepository;
-import pe.org.group02.ventaboletoscine.response.Response;
+import pe.org.group02.ventaboletoscine.response.ResponseTemp;
 import pe.org.group02.ventaboletoscine.response.ResponseConsultas;
 import pe.org.group02.ventaboletoscine.response.ResponseLogin;
 import pe.org.group02.ventaboletoscine.security.JWTAuthenticationConfig;
@@ -73,14 +73,15 @@ public class UsuariosService {
                 HttpStatus.BAD_REQUEST);
 
         this.addUser(temporalRegistration.getUsuario());
-        return new ResponseEntity<String>( "Ok",
+        String token = jwtAuthenticationConfig.getJWTToken(temporalRegistration.getUsuario().getEmail());
+        return new ResponseEntity<String>( token,
                 HttpStatus.OK);
     }
 
-    public Response registrate(Usuarios usu) {
+    public ResponseTemp registrate(Usuarios usu) {
         log.info("registrate.init " + usu.toString());
         if (usu.getEmail() == null && usu.getPassword() == null){
-            return new Response(401, "Email   password are required");
+            return new ResponseTemp(401, "Email   password are required");
         }
 
         String encodedPassword = new BCryptPasswordEncoder().encode(usu.getPassword());
@@ -90,7 +91,7 @@ public class UsuariosService {
         log.info("registrate.email " + email.toString());
         temporalRegistrationService.save(email);
         emailHelper.sendEmail(email);
-        return new Response(200, null);
+        return new ResponseTemp(200, null);
     }
 
     public ResponseConsultas<Usuarios> findById(Integer id) {

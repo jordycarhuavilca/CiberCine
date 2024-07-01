@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import pe.org.group02.ventaboletoscine.entity.Funciones;
 import pe.org.group02.ventaboletoscine.repository.FuncionesRepository;
-import pe.org.group02.ventaboletoscine.response.Response;
+import pe.org.group02.ventaboletoscine.response.ResponseTemp;
 import pe.org.group02.ventaboletoscine.response.ResponseConsultas;
 
 import java.util.List;
@@ -18,12 +18,12 @@ public class FuncionesService {
     private FuncionesRepository funcionesRepository;
 
     @PostMapping("/add")
-    public Response addFuncione(@RequestBody Funciones funciones){
+    public ResponseTemp addFuncione(@RequestBody Funciones funciones){
         if(funciones.getIdfuncion() != null){
-            return new Response(401, "Id no permitido");
+            return new ResponseTemp(401, "Id no permitido");
         }
         funcionesRepository.save(funciones);
-        return new Response(200, null);
+        return new ResponseTemp(200, null);
     }
 
     @GetMapping("/find")
@@ -41,21 +41,21 @@ public class FuncionesService {
     }
 
     @PatchMapping("/update")
-    public Response updateFuncion(@RequestBody Funciones funciones){
+    public ResponseTemp updateFuncion(@RequestBody Funciones funciones){
         if(!funcionesRepository.findById(funciones.getIdfuncion()).isPresent()){
-            return new Response(404, "Not Found");
+            return new ResponseTemp(404, "Not Found");
         }
 
         funcionesRepository.save(funciones);
-        return new Response(200, null);
+        return new ResponseTemp(200, null);
     }
 
     @DeleteMapping("/delete")
-    public Response deleteFuncion(@RequestBody Funciones funciones) {
+    public ResponseTemp deleteFuncion(@RequestBody Funciones funciones) {
         if (!funcionesRepository.findById(funciones.getIdfuncion()).isPresent()) {
-            return new Response(404, "Not Found");
+            return new ResponseTemp(404, "Not Found");
         }
         funcionesRepository.delete(funciones);
-        return new Response(200, null);
+        return new ResponseTemp(200, null);
     }
 }
