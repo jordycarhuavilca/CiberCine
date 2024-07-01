@@ -13,6 +13,7 @@ import pe.org.group02.ventaboletoscine.entity.Usuarios;
 import pe.org.group02.ventaboletoscine.helper.emailHelper;
 import pe.org.group02.ventaboletoscine.repository.UsuariosRepository;
 import pe.org.group02.ventaboletoscine.response.Response;
+import pe.org.group02.ventaboletoscine.response.ResponseTemp;
 import pe.org.group02.ventaboletoscine.response.ResponseConsultas;
 import pe.org.group02.ventaboletoscine.response.ResponseLogin;
 import pe.org.group02.ventaboletoscine.security.JWTAuthenticationConfig;
@@ -58,29 +59,27 @@ public class UsuariosService {
         return new ResponseLogin(01, null, token);
     }
 
-    public ResponseEntity<String> verifyRegistration(VerifyRegistrationDto verifyRegistrationDto){
+    public Response<String> verifyRegistration(VerifyRegistrationDto verifyRegistrationDto){
         log.info("verifyRegistration.init " + verifyRegistrationDto.toString());
         Email temporalRegistration = this.temporalRegistrationService.findById(verifyRegistrationDto.getCode());
         log.info("temporalRegistration.get " + temporalRegistration);
 
 
-        if(temporalRegistration == null) return new ResponseEntity<String>( "error",
-                    HttpStatus.BAD_REQUEST);
+        if(temporalRegistration == null) return new Response<String>(HttpStatus.BAD_REQUEST,null,"your token has expired");
 
         Boolean isRigthUser= temporalRegistration.getUsuario().getEmail().equals(verifyRegistrationDto.getEmail());
 
-        if (!isRigthUser) return new ResponseEntity<String>( "error",
-                HttpStatus.BAD_REQUEST);
+        if (!isRigthUser) return new Response<String>( HttpStatus.BAD_REQUEST,null,"Email must be the same");
 
         this.addUser(temporalRegistration.getUsuario());
-        return new ResponseEntity<String>( "Ok",
-                HttpStatus.OK);
+        String token = jwtAuthenticationConfig.getJWTToken(temporalRegistration.getUsuario().getEmail());
+        return new Response<String>( HttpStatus.OK,token,null);
     }
 
     public Response registrate(Usuarios usu) {
         log.info("registrate.init " + usu.toString());
         if (usu.getEmail() == null && usu.getPassword() == null){
-            return new Response(401, "Email   password are required");
+            return new Response<>(HttpStatus.UNPROCESSABLE_ENTITY, null,"Email   password are required");
         }
 
         String encodedPassword = new BCryptPasswordEncoder().encode(usu.getPassword());
@@ -89,8 +88,8 @@ public class UsuariosService {
         Email email = userUtils.setUpEmail(emailConstans.ASUNTO[0],userUtils.generateNumericId(),usuario);
         log.info("registrate.email " + email.toString());
         temporalRegistrationService.save(email);
-        //emailHelper.sendEmail(email);
-        return new Response(200, null);
+        emailHelper.sendEmail(email);
+        return new Response(HttpStatus.OK,null, null);
     }
 
     public ResponseConsultas<Usuarios> findById(Integer id) {
