@@ -12,7 +12,11 @@ public class Constants {
 
     // Spring security
     public static final String[] ALLOW_USER_URL = {"/user/login","/user/registrate","/user/verifyRegistration"};
-
+    public static final String[] ALLOW_URL = {"/user/login",
+            "/user/registrate",
+            "/user/verifyRegistration",
+            "/movie/find/{id}",
+            "/movie/list"};
     public static final String HEADER_AUTHORIZACION_KEY = "Authorization";
     public static final String TOKEN_BEARER_PREFIX = "Bearer ";
 

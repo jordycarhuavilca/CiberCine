@@ -48,6 +48,7 @@ public class UsuariosService {
 
     public ResponseLogin loginUsuario(Usuarios usu){
         Usuarios usuResult = usuariosRepository.findByEmail(usu.getEmail());
+        log.info("loginUsuario.init " + usu.toString());
         if(usuResult == null){
             return new ResponseLogin(404, "incorrect credentials", null);
         }

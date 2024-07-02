@@ -1,5 +1,6 @@
 package pe.org.group02.ventaboletoscine.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -8,6 +9,7 @@ import pe.org.group02.ventaboletoscine.repository.PeliculasRepository;
 import pe.org.group02.ventaboletoscine.response.Response;
 
 @Service
+@Slf4j
 public class PeliculasService {
 
     @Autowired
@@ -15,6 +17,7 @@ public class PeliculasService {
 
     public Response<Pelicula> findById( Integer id) {
         try{
+            log.info("findById.init " + id);
             if (id == null) {
                 return new Response<Pelicula>(HttpStatus.BAD_REQUEST, null, "ID cannot be null");
             }
