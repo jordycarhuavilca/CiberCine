@@ -5,20 +5,15 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
-import pe.org.group02.ventaboletoscine.repository.UsuariosRepository;
-
 import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import static pe.org.group02.ventaboletoscine.security.Constants.*;
-
 
 @Component
 public class JWTAuthorizationFilter extends OncePerRequestFilter {
