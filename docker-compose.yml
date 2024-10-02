@@ -1,5 +1,15 @@
 version: "3.8"
 services:
+  hk-nginx:
+    container_name: hk-nginx
+    image: nginx:1.13
+    restart: always
+    ports:
+      - 80:80
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+    depends_on:
+      - app
   app:
     container_name: cyberCine_app
     build:
