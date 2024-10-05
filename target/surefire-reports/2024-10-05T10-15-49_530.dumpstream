@@ -1,4 +1,4 @@
-# Created at 2024-10-05T08:56:51.890
+# Created at 2024-10-05T10:15:49.708
 Boot Manifest-JAR contains absolute paths in classpath 'D:\OneDrive\Documentos\working-place-java-2024\final-proyect\CiberCine\target\test-classes'
 Hint: <argLine>-Djdk.net.URLClassPath.disableClassPathURLCheck=true</argLine>
 'other' has different root
